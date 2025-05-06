@@ -463,10 +463,11 @@ export default function VersionB() {
           <motion.div className="mx-auto max-w-6xl" animate={mapControls} initial={{ opacity: 0, y: 30 }}>
             <div className="relative aspect-[2/1] w-full overflow-hidden rounded-xl bg-zinc-800">
               <Image
-                src="https://images.unsplash.com/photo-1589519160732-57fc6a9dfe37?q=80&w=1440&auto=format&fit=crop"
-                alt="World map with location pins"
+                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1440&auto=format&fit=crop"
+                alt="3D World map with location pins"
                 fill
                 className="object-cover"
+                priority
               />
 
               {/* Map Pins */}
