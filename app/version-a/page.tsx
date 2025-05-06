@@ -6,6 +6,7 @@ import Image from "next/image"
 import { motion, useScroll, useTransform, useInView, useAnimation } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Play, Quote } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function VersionA() {
   // For scroll-based animations
@@ -100,21 +101,24 @@ export default function VersionA() {
   ])
 
   return (
-    <main className="relative overflow-x-hidden bg-white">
+    <main className="relative overflow-x-hidden bg-emotional-background dark:bg-emotional-background text-foreground">
       {/* Navigation */}
-      <nav className="fixed left-0 top-0 z-50 w-full bg-white/80 backdrop-blur-sm">
+      <nav className="fixed left-0 top-0 z-50 w-full bg-white/80 dark:bg-emotional-muted/80 backdrop-blur-sm">
         <div className="container flex h-16 items-center justify-between px-4">
           <Link href="/" className="text-xl font-bold">
             EduBridge
           </Link>
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <Link href="/">
               <Button variant="ghost" size="sm" className="flex items-center gap-1">
                 <ArrowLeft className="h-4 w-4" />
                 Back
               </Button>
             </Link>
-            <Button size="sm">Donate Now</Button>
+            <Button size="sm" className="bg-emotional-primary hover:bg-emotional-primary/90 text-white">
+              Donate Now
+            </Button>
           </div>
         </div>
       </nav>
@@ -143,7 +147,7 @@ export default function VersionA() {
           <p className="mb-8 max-w-2xl text-lg md:text-xl">
             Every child deserves a future shaped by knowledge, not by circumstance.
           </p>
-          <Button size="lg" className="bg-white text-black hover:bg-white/90">
+          <Button size="lg" className="bg-emotional-primary hover:bg-emotional-primary/90 text-white">
             Help Rewrite Their Story
           </Button>
         </motion.div>
@@ -517,7 +521,7 @@ export default function VersionA() {
           </p>
 
           <div className="mx-auto flex max-w-md flex-col gap-4 sm:flex-row">
-            <Button size="lg" className="flex-1 bg-white text-black hover:bg-white/90">
+            <Button size="lg" className="flex-1 bg-emotional-primary hover:bg-emotional-primary/90 text-white">
               Donate Now
             </Button>
             <Button size="lg" variant="outline" className="flex-1 border-white text-white hover:bg-white/10">

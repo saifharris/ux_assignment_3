@@ -2,11 +2,15 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-12 md:py-24">
+        <div className="flex justify-end mb-4">
+          <ThemeToggle />
+        </div>
         <div className="mb-12 text-center">
           <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-6xl">EduBridge A/B Test</h1>
           <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
@@ -15,7 +19,7 @@ export default function Home() {
           </p>
 
           <div className="mx-auto mb-12 grid max-w-5xl gap-8 md:grid-cols-2">
-            <div className="overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:shadow-md">
+            <div className="overflow-hidden rounded-xl border bg-card shadow-sm transition-all hover:shadow-md">
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1280&auto=format&fit=crop"
@@ -35,7 +39,7 @@ export default function Home() {
                   scroll-based animations and transitions.
                 </p>
                 <Link href="/version-a">
-                  <Button className="w-full">
+                  <Button className="w-full bg-emotional-primary hover:bg-emotional-primary/90 text-white">
                     View Version A
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -43,7 +47,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:shadow-md">
+            <div className="overflow-hidden rounded-xl border bg-card shadow-sm transition-all hover:shadow-md">
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1280&auto=format&fit=crop"
@@ -63,7 +67,7 @@ export default function Home() {
                   animated charts and counters.
                 </p>
                 <Link href="/version-b">
-                  <Button className="w-full" variant="outline">
+                  <Button className="w-full bg-data-primary hover:bg-data-primary/90 text-white">
                     View Version B
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -72,7 +76,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mx-auto max-w-2xl rounded-lg bg-slate-50 p-6">
+          <div className="mx-auto max-w-2xl rounded-lg bg-muted p-6">
             <h2 className="mb-2 text-xl font-semibold">About This A/B Test</h2>
             <p className="text-muted-foreground">
               We're testing which approach creates a better user experience and motivates donors more effectively. After

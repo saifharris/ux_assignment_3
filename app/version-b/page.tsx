@@ -1,11 +1,26 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect, useState, Suspense } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, useScroll, useTransform, useInView, useAnimation } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, BarChart3, BookOpen, GraduationCap, Users } from "lucide-react"
+import dynamic from "next/dynamic"
+import { ThemeToggle } from "@/components/theme-toggle"
+
+// Dynamically import the InteractiveGlobe component with no SSR
+const InteractiveGlobe = dynamic(() => import("@/components/interactive-globe"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex aspect-[2/1] w-full items-center justify-center rounded-xl bg-data-muted dark:bg-data-muted/30">
+      <div className="text-center">
+        <div className="mb-2 h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-data-primary mx-auto"></div>
+        <p className="text-muted-foreground">Loading interactive globe...</p>
+      </div>
+    </div>
+  ),
+})
 
 export default function VersionB() {
   // For scroll-based animations
@@ -134,25 +149,26 @@ export default function VersionB() {
   ])
 
   return (
-    <main className="relative overflow-x-hidden bg-zinc-900 text-white">
+    <main className="relative overflow-x-hidden bg-data-background dark:bg-data-background text-foreground">
       {/* Navigation */}
-      <nav className="fixed left-0 top-0 z-50 w-full bg-zinc-900/80 backdrop-blur-sm">
+      <nav className="fixed left-0 top-0 z-50 w-full bg-white/80 dark:bg-data-muted/80 backdrop-blur-sm">
         <div className="container flex h-16 items-center justify-between px-4">
           <Link href="/" className="text-xl font-bold">
             EduBridge
           </Link>
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <Link href="/">
               <Button
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-1 border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white"
+                className="flex items-center gap-1 border-data-muted text-muted-foreground hover:bg-data-muted/50 hover:text-foreground"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Back
               </Button>
             </Link>
-            <Button size="sm" className="bg-purple-600 hover:bg-purple-700">
+            <Button size="sm" className="bg-data-primary hover:bg-data-primary/90 text-white">
               Donate Now
             </Button>
           </div>
@@ -186,7 +202,7 @@ export default function VersionB() {
             Every child deserves access to quality education regardless of their circumstances. Together, we can change
             this statistic.
           </p>
-          <Button size="lg" className="bg-purple-600 hover:bg-purple-700">
+          <Button size="lg" className="bg-data-primary hover:bg-data-primary/90 text-white">
             Support the Change
           </Button>
         </motion.div>
@@ -199,7 +215,7 @@ export default function VersionB() {
           <p className="mb-2 text-sm text-zinc-400">Scroll to see our impact</p>
           <div className="h-10 w-6 rounded-full border-2 border-zinc-500">
             <motion.div
-              className="mx-auto mt-1 h-2 w-2 rounded-full bg-purple-500"
+              className="mx-auto mt-1 h-2 w-2 rounded-full bg-data-primary"
               animate={{ y: [0, 15, 0] }}
               transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
             />
@@ -225,78 +241,78 @@ export default function VersionB() {
             initial={{ opacity: 0, y: 30 }}
           >
             {/* Metric 1 */}
-            <div className="rounded-xl bg-zinc-800 p-6 text-center">
+            <div className="rounded-xl bg-data-muted dark:bg-data-muted/30 p-6 text-center">
               <div className="mb-4 flex justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-purple-900">
-                  <BookOpen className="h-8 w-8 text-purple-300" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-data-secondary/20">
+                  <BookOpen className="h-8 w-8 text-data-secondary" />
                 </div>
               </div>
               <motion.h3
-                className="mb-2 text-4xl font-bold text-purple-400"
+                className="mb-2 text-4xl font-bold text-data-secondary"
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3 }}
               >
                 2.1M
               </motion.h3>
-              <p className="text-zinc-400">Books Distributed</p>
+              <p className="text-muted-foreground">Books Distributed</p>
             </div>
 
             {/* Metric 2 */}
-            <div className="rounded-xl bg-zinc-800 p-6 text-center">
+            <div className="rounded-xl bg-data-muted dark:bg-data-muted/30 p-6 text-center">
               <div className="mb-4 flex justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-purple-900">
-                  <Users className="h-8 w-8 text-purple-300" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-data-primary/20">
+                  <Users className="h-8 w-8 text-data-primary" />
                 </div>
               </div>
               <motion.h3
-                className="mb-2 text-4xl font-bold text-purple-400"
+                className="mb-2 text-4xl font-bold text-data-primary"
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, delay: 0.5 }}
               >
                 6.5K
               </motion.h3>
-              <p className="text-zinc-400">Students Enrolled</p>
+              <p className="text-muted-foreground">Students Enrolled</p>
             </div>
 
             {/* Metric 3 */}
-            <div className="rounded-xl bg-zinc-800 p-6 text-center">
+            <div className="rounded-xl bg-data-muted dark:bg-data-muted/30 p-6 text-center">
               <div className="mb-4 flex justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-purple-900">
-                  <GraduationCap className="h-8 w-8 text-purple-300" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-data-accent/20">
+                  <GraduationCap className="h-8 w-8 text-data-accent" />
                 </div>
               </div>
               <motion.h3
-                className="mb-2 text-4xl font-bold text-purple-400"
+                className="mb-2 text-4xl font-bold text-data-accent"
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, delay: 1 }}
               >
                 94%
               </motion.h3>
-              <p className="text-zinc-400">Graduation Rate</p>
+              <p className="text-muted-foreground">Graduation Rate</p>
             </div>
 
             {/* Metric 4 */}
-            <div className="rounded-xl bg-zinc-800 p-6 text-center">
+            <div className="rounded-xl bg-data-muted dark:bg-data-muted/30 p-6 text-center">
               <div className="mb-4 flex justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-purple-900">
-                  <BarChart3 className="h-8 w-8 text-purple-300" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-data-secondary/20">
+                  <BarChart3 className="h-8 w-8 text-data-secondary" />
                 </div>
               </div>
               <motion.h3
-                className="mb-2 text-4xl font-bold text-purple-400"
+                className="mb-2 text-4xl font-bold text-data-secondary"
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, delay: 1.5 }}
               >
                 127
               </motion.h3>
-              <p className="text-zinc-400">Learning Centers</p>
+              <p className="text-muted-foreground">Learning Centers</p>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Charts + Graphs Section */}
-      <section className="bg-zinc-800 py-20" ref={chartsRef}>
+      <section className="bg-data-muted/50 dark:bg-data-muted/10 py-20" ref={chartsRef}>
         <div className="container px-4">
           <motion.h2
             className="mb-16 text-center text-3xl font-bold md:text-4xl"
@@ -312,7 +328,7 @@ export default function VersionB() {
             initial={{ opacity: 0, scale: 0.95 }}
           >
             {/* Chart 1 - Funding Allocation */}
-            <div className="rounded-xl bg-zinc-900 p-6">
+            <div className="rounded-xl bg-white dark:bg-data-muted/30 p-6 shadow-sm">
               <h3 className="mb-4 text-xl font-semibold">Funding Allocation</h3>
               <div className="relative aspect-square w-full">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -323,7 +339,7 @@ export default function VersionB() {
                       cy="50"
                       r="40"
                       fill="transparent"
-                      stroke="#9333ea"
+                      stroke="hsl(var(--data-primary))"
                       strokeWidth="20"
                       strokeDasharray="251.2"
                       strokeDashoffset={251.2 - 251.2 * 0.92 * chartsProgress.get()}
@@ -335,7 +351,7 @@ export default function VersionB() {
                       cy="50"
                       r="40"
                       fill="transparent"
-                      stroke="#4c1d95"
+                      stroke="hsl(var(--data-secondary))"
                       strokeWidth="20"
                       strokeDasharray="251.2"
                       strokeDashoffset={251.2 - 251.2 * 0.08 * chartsProgress.get()}
@@ -346,24 +362,24 @@ export default function VersionB() {
                   </svg>
                   <div className="absolute text-center">
                     <p className="text-3xl font-bold">92%</p>
-                    <p className="text-xs text-zinc-400">Program Expenses</p>
+                    <p className="text-xs text-muted-foreground">Program Expenses</p>
                   </div>
                 </div>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-purple-600"></div>
-                  <span className="text-zinc-300">Programs (92%)</span>
+                  <div className="h-3 w-3 rounded-full bg-data-primary"></div>
+                  <span className="text-muted-foreground">Programs (92%)</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-purple-900"></div>
-                  <span className="text-zinc-300">Admin (8%)</span>
+                  <div className="h-3 w-3 rounded-full bg-data-secondary"></div>
+                  <span className="text-muted-foreground">Admin (8%)</span>
                 </div>
               </div>
             </div>
 
             {/* Chart 2 - Gender Ratio */}
-            <div className="rounded-xl bg-zinc-900 p-6">
+            <div className="rounded-xl bg-white dark:bg-data-muted/30 p-6 shadow-sm">
               <h3 className="mb-4 text-xl font-semibold">Student Gender Ratio</h3>
               <div className="relative aspect-square w-full">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -374,7 +390,7 @@ export default function VersionB() {
                       cy="50"
                       r="40"
                       fill="transparent"
-                      stroke="#9333ea"
+                      stroke="hsl(var(--data-primary))"
                       strokeWidth="20"
                       strokeDasharray="251.2"
                       strokeDashoffset={251.2 - 251.2 * 0.54 * chartsProgress.get()}
@@ -386,7 +402,7 @@ export default function VersionB() {
                       cy="50"
                       r="40"
                       fill="transparent"
-                      stroke="#4c1d95"
+                      stroke="hsl(var(--data-secondary))"
                       strokeWidth="20"
                       strokeDasharray="251.2"
                       strokeDashoffset={251.2 - 251.2 * 0.46}
@@ -396,52 +412,52 @@ export default function VersionB() {
                   </svg>
                   <div className="absolute text-center">
                     <p className="text-3xl font-bold">54%</p>
-                    <p className="text-xs text-zinc-400">Girls</p>
+                    <p className="text-xs text-muted-foreground">Girls</p>
                   </div>
                 </div>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-purple-600"></div>
-                  <span className="text-zinc-300">Girls (54%)</span>
+                  <div className="h-3 w-3 rounded-full bg-data-primary"></div>
+                  <span className="text-muted-foreground">Girls (54%)</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-purple-900"></div>
-                  <span className="text-zinc-300">Boys (46%)</span>
+                  <div className="h-3 w-3 rounded-full bg-data-secondary"></div>
+                  <span className="text-muted-foreground">Boys (46%)</span>
                 </div>
               </div>
             </div>
 
             {/* Chart 3 - Graduation Outcomes */}
-            <div className="rounded-xl bg-zinc-900 p-6">
+            <div className="rounded-xl bg-white dark:bg-data-muted/30 p-6 shadow-sm">
               <h3 className="mb-4 text-xl font-semibold">Graduate Outcomes</h3>
               <div className="flex h-64 flex-col justify-end gap-2">
                 <div className="flex items-end gap-4">
                   <motion.div
-                    className="w-1/4 rounded-t bg-purple-900"
+                    className="w-1/4 rounded-t bg-data-primary"
                     style={{ height: `${65 * chartsProgress.get()}%` }}
                   ></motion.div>
                   <motion.div
-                    className="w-1/4 rounded-t bg-purple-700"
+                    className="w-1/4 rounded-t bg-data-secondary"
                     style={{ height: `${22 * chartsProgress.get()}%` }}
                   ></motion.div>
                   <motion.div
-                    className="w-1/4 rounded-t bg-purple-500"
+                    className="w-1/4 rounded-t bg-data-accent"
                     style={{ height: `${10 * chartsProgress.get()}%` }}
                   ></motion.div>
                   <motion.div
-                    className="w-1/4 rounded-t bg-purple-300"
+                    className="w-1/4 rounded-t bg-data-muted"
                     style={{ height: `${3 * chartsProgress.get()}%` }}
                   ></motion.div>
                 </div>
-                <div className="mt-2 grid grid-cols-4 text-center text-xs text-zinc-400">
+                <div className="mt-2 grid grid-cols-4 text-center text-xs text-muted-foreground">
                   <div>Higher Ed</div>
                   <div>Employment</div>
                   <div>Vocational</div>
                   <div>Other</div>
                 </div>
               </div>
-              <div className="mt-4 text-sm text-zinc-300">
+              <div className="mt-4 text-sm text-muted-foreground">
                 <p>65% of our graduates continue to higher education, with 87% finding employment within one year.</p>
               </div>
             </div>
@@ -461,78 +477,46 @@ export default function VersionB() {
           </motion.h2>
 
           <motion.div className="mx-auto max-w-6xl" animate={mapControls} initial={{ opacity: 0, y: 30 }}>
-            <div className="relative aspect-[2/1] w-full overflow-hidden rounded-xl bg-zinc-800">
-              <Image
-                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1440&auto=format&fit=crop"
-                alt="3D World map with location pins"
-                fill
-                className="object-cover"
-                priority
-              />
-
-              {/* Map Pins */}
-              <motion.div
-                className="absolute left-[30%] top-[40%] flex h-6 w-6 items-center justify-center rounded-full bg-purple-600"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
-              >
-                <div className="absolute h-full w-full animate-ping rounded-full bg-purple-600 opacity-75"></div>
-                <span className="text-xs font-bold">12</span>
-              </motion.div>
-
-              <motion.div
-                className="absolute left-[60%] top-[35%] flex h-6 w-6 items-center justify-center rounded-full bg-purple-600"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2, delay: 0.5 }}
-              >
-                <div className="absolute h-full w-full animate-ping rounded-full bg-purple-600 opacity-75"></div>
-                <span className="text-xs font-bold">28</span>
-              </motion.div>
-
-              <motion.div
-                className="absolute left-[45%] top-[60%] flex h-6 w-6 items-center justify-center rounded-full bg-purple-600"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2, delay: 1 }}
-              >
-                <div className="absolute h-full w-full animate-ping rounded-full bg-purple-600 opacity-75"></div>
-                <span className="text-xs font-bold">43</span>
-              </motion.div>
-
-              <motion.div
-                className="absolute left-[75%] top-[55%] flex h-6 w-6 items-center justify-center rounded-full bg-purple-600"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2, delay: 1.5 }}
-              >
-                <div className="absolute h-full w-full animate-ping rounded-full bg-purple-600 opacity-75"></div>
-                <span className="text-xs font-bold">19</span>
-              </motion.div>
-            </div>
+            <Suspense
+              fallback={
+                <div className="flex aspect-[2/1] w-full items-center justify-center rounded-xl bg-data-muted dark:bg-data-muted/30">
+                  <div className="text-center">
+                    <div className="mb-2 h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-data-primary mx-auto"></div>
+                    <p className="text-muted-foreground">Loading interactive globe...</p>
+                  </div>
+                </div>
+              }
+            >
+              <InteractiveGlobe />
+            </Suspense>
 
             <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-lg bg-zinc-800 p-4">
+              <div className="rounded-lg bg-data-muted dark:bg-data-muted/30 p-4 shadow-sm">
                 <h3 className="mb-2 font-semibold">Africa</h3>
-                <p className="text-sm text-zinc-400">
+                <p className="text-sm text-muted-foreground">
                   43 learning centers across 12 countries, serving 2,800+ students.
                 </p>
               </div>
 
-              <div className="rounded-lg bg-zinc-800 p-4">
+              <div className="rounded-lg bg-data-muted dark:bg-data-muted/30 p-4 shadow-sm">
                 <h3 className="mb-2 font-semibold">South Asia</h3>
-                <p className="text-sm text-zinc-400">
+                <p className="text-sm text-muted-foreground">
                   28 learning centers across 4 countries, serving 1,900+ students.
                 </p>
               </div>
 
-              <div className="rounded-lg bg-zinc-800 p-4">
+              <div className="rounded-lg bg-data-muted dark:bg-data-muted/30 p-4 shadow-sm">
                 <h3 className="mb-2 font-semibold">Latin America</h3>
-                <p className="text-sm text-zinc-400">
+                <p className="text-sm text-muted-foreground">
                   19 learning centers across 6 countries, serving 1,200+ students.
                 </p>
               </div>
 
-              <div className="rounded-lg bg-zinc-800 p-4">
+              <div className="rounded-lg bg-data-muted dark:bg-data-muted/30 p-4 shadow-sm">
                 <h3 className="mb-2 font-semibold">Middle East</h3>
-                <p className="text-sm text-zinc-400">12 learning centers across 3 countries, serving 600+ students.</p>
+                <p className="text-sm text-muted-foreground">
+                  12 learning centers across 3 countries, serving 600+ students.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -540,7 +524,7 @@ export default function VersionB() {
       </section>
 
       {/* Program Portfolio Section */}
-      <section className="bg-zinc-800 py-20" ref={programsRef}>
+      <section className="bg-data-muted/50 dark:bg-data-muted/10 py-20" ref={programsRef}>
         <div className="container px-4">
           <motion.h2
             className="mb-16 text-center text-3xl font-bold md:text-4xl"
@@ -556,7 +540,7 @@ export default function VersionB() {
             initial={{ opacity: 0, y: 30 }}
           >
             {/* Program 1 */}
-            <div className="group overflow-hidden rounded-xl bg-zinc-900 transition-all hover:bg-zinc-950">
+            <div className="group overflow-hidden rounded-xl bg-white dark:bg-data-muted/30 transition-all hover:shadow-md shadow-sm">
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1581726707445-75cbe4efc586?q=80&w=1280&auto=format&fit=crop"
@@ -566,28 +550,28 @@ export default function VersionB() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                 <div className="absolute bottom-4 left-4">
-                  <h3 className="text-xl font-bold">Digital Classrooms</h3>
+                  <h3 className="text-xl font-bold text-white">Digital Classrooms</h3>
                 </div>
               </div>
               <div className="p-6">
-                <p className="mb-4 text-zinc-400">
+                <p className="mb-4 text-muted-foreground">
                   Technology-equipped learning spaces with tablets, educational software, and internet access for
                   students in remote areas.
                 </p>
-                <ul className="mb-6 space-y-2 text-sm text-zinc-300">
+                <ul className="mb-6 space-y-2 text-sm text-foreground">
                   <li className="flex items-center gap-2">
-                    <div className="h-2 w-2 rounded-full bg-purple-500"></div>
+                    <div className="h-2 w-2 rounded-full bg-data-primary"></div>
                     <span>42 digital classrooms established</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="h-2 w-2 rounded-full bg-purple-500"></div>
+                    <div className="h-2 w-2 rounded-full bg-data-primary"></div>
                     <span>1,200+ students with digital literacy</span>
                   </li>
                 </ul>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white"
+                  className="w-full border-data-muted hover:bg-data-muted/50 hover:text-foreground"
                 >
                   Learn More
                 </Button>
@@ -595,7 +579,7 @@ export default function VersionB() {
             </div>
 
             {/* Program 2 */}
-            <div className="group overflow-hidden rounded-xl bg-zinc-900 transition-all hover:bg-zinc-950">
+            <div className="group overflow-hidden rounded-xl bg-white dark:bg-data-muted/30 transition-all hover:shadow-md shadow-sm">
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1280&auto=format&fit=crop"
@@ -605,28 +589,28 @@ export default function VersionB() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                 <div className="absolute bottom-4 left-4">
-                  <h3 className="text-xl font-bold">Scholarships</h3>
+                  <h3 className="text-xl font-bold text-white">Scholarships</h3>
                 </div>
               </div>
               <div className="p-6">
-                <p className="mb-4 text-zinc-400">
+                <p className="mb-4 text-muted-foreground">
                   Full and partial scholarships covering tuition, books, uniforms, and transportation for high-potential
                   students from low-income families.
                 </p>
-                <ul className="mb-6 space-y-2 text-sm text-zinc-300">
+                <ul className="mb-6 space-y-2 text-sm text-foreground">
                   <li className="flex items-center gap-2">
-                    <div className="h-2 w-2 rounded-full bg-purple-500"></div>
+                    <div className="h-2 w-2 rounded-full bg-data-primary"></div>
                     <span>3,500+ scholarships awarded</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="h-2 w-2 rounded-full bg-purple-500"></div>
+                    <div className="h-2 w-2 rounded-full bg-data-primary"></div>
                     <span>94% graduation rate among scholars</span>
                   </li>
                 </ul>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white"
+                  className="w-full border-data-muted hover:bg-data-muted/50 hover:text-foreground"
                 >
                   Learn More
                 </Button>
@@ -634,7 +618,7 @@ export default function VersionB() {
             </div>
 
             {/* Program 3 */}
-            <div className="group overflow-hidden rounded-xl bg-zinc-900 transition-all hover:bg-zinc-950">
+            <div className="group overflow-hidden rounded-xl bg-white dark:bg-data-muted/30 transition-all hover:shadow-md shadow-sm">
               <div className="relative aspect-video w-full overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=1280&auto=format&fit=crop"
@@ -644,28 +628,28 @@ export default function VersionB() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                 <div className="absolute bottom-4 left-4">
-                  <h3 className="text-xl font-bold">Teacher Training</h3>
+                  <h3 className="text-xl font-bold text-white">Teacher Training</h3>
                 </div>
               </div>
               <div className="p-6">
-                <p className="mb-4 text-zinc-400">
+                <p className="mb-4 text-muted-foreground">
                   Professional development programs for local educators, focusing on modern teaching methods, technology
                   integration, and student engagement.
                 </p>
-                <ul className="mb-6 space-y-2 text-sm text-zinc-300">
+                <ul className="mb-6 space-y-2 text-sm text-foreground">
                   <li className="flex items-center gap-2">
-                    <div className="h-2 w-2 rounded-full bg-purple-500"></div>
+                    <div className="h-2 w-2 rounded-full bg-data-primary"></div>
                     <span>850+ teachers trained</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="h-2 w-2 rounded-full bg-purple-500"></div>
+                    <div className="h-2 w-2 rounded-full bg-data-primary"></div>
                     <span>32% increase in student performance</span>
                   </li>
                 </ul>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white"
+                  className="w-full border-data-muted hover:bg-data-muted/50 hover:text-foreground"
                 >
                   Learn More
                 </Button>
@@ -687,11 +671,11 @@ export default function VersionB() {
           </motion.h2>
 
           <motion.div className="mx-auto max-w-6xl" animate={trustControls} initial={{ opacity: 0, scale: 0.95 }}>
-            <div className="mb-12 rounded-xl bg-zinc-800 p-6 text-center">
+            <div className="mb-12 rounded-xl bg-data-muted dark:bg-data-muted/30 p-6 text-center shadow-sm">
               <h3 className="mb-4 text-xl font-semibold">Your Donation at Work</h3>
-              <div className="relative mx-auto h-8 max-w-3xl overflow-hidden rounded-full bg-zinc-700">
+              <div className="relative mx-auto h-8 max-w-3xl overflow-hidden rounded-full bg-data-muted/50 dark:bg-data-muted/50">
                 <motion.div
-                  className="h-full bg-purple-600"
+                  className="h-full bg-data-primary"
                   style={{ width: `${92 * chartsProgress.get()}%` }}
                 ></motion.div>
                 <div className="absolute inset-0 flex items-center justify-center text-sm font-medium">
@@ -699,79 +683,78 @@ export default function VersionB() {
                 </div>
               </div>
               <div className="mt-4 grid grid-cols-3 text-sm">
-                <div className="text-zinc-400">Programs: 92%</div>
-                <div className="text-zinc-400">Fundraising: 5%</div>
-                <div className="text-zinc-400">Administration: 3%</div>
+                <div className="text-muted-foreground">Programs: 92%</div>
+                <div className="text-muted-foreground">Fundraising: 5%</div>
+                <div className="text-muted-foreground">Administration: 3%</div>
               </div>
             </div>
 
             <div className="mb-12 grid gap-6 md:grid-cols-3">
-              <div className="rounded-xl bg-zinc-800 p-6">
+              <div className="rounded-xl bg-white dark:bg-data-muted/30 p-6 shadow-sm">
                 <h3 className="mb-4 text-xl font-semibold">Charity Ratings</h3>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-zinc-300">Charity Navigator</span>
+                    <span className="text-foreground">Charity Navigator</span>
                     <div className="flex">
-                      <div className="h-5 w-5 text-yellow-400">★</div>
                       <div className="h-5 w-5 text-yellow-400">★</div>
                       <div className="h-5 w-5 text-yellow-400">★</div>
                       <div className="h-5 w-5 text-yellow-400">★</div>
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-zinc-300">GuideStar</span>
+                    <span className="text-foreground">GuideStar</span>
                     <span className="rounded bg-yellow-400 px-2 py-0.5 text-xs font-medium text-black">Platinum</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-zinc-300">CharityWatch</span>
+                    <span className="text-foreground">CharityWatch</span>
                     <span className="font-medium text-green-400">A+</span>
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-xl bg-zinc-800 p-6">
+              <div className="rounded-xl bg-white dark:bg-data-muted/30 p-6 shadow-sm">
                 <h3 className="mb-4 text-xl font-semibold">Press Coverage</h3>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="h-8 w-8 rounded bg-white"></div>
-                    <span className="text-zinc-300">The New York Times</span>
+                    <span className="text-foreground">The New York Times</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="h-8 w-8 rounded bg-white"></div>
-                    <span className="text-zinc-300">Forbes</span>
+                    <span className="text-foreground">Forbes</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="h-8 w-8 rounded bg-white"></div>
-                    <span className="text-zinc-300">BBC</span>
+                    <span className="text-foreground">BBC</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="h-8 w-8 rounded bg-white"></div>
-                    <span className="text-zinc-300">CNN</span>
+                    <span className="text-foreground">CNN</span>
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-xl bg-zinc-800 p-6">
+              <div className="rounded-xl bg-white dark:bg-data-muted/30 p-6 shadow-sm">
                 <h3 className="mb-4 text-xl font-semibold">Donor Testimonials</h3>
                 <div className="space-y-4">
-                  <div className="rounded-lg bg-zinc-700 p-3 text-sm">
-                    <p className="mb-2 text-zinc-300">
+                  <div className="rounded-lg bg-data-muted/50 dark:bg-data-muted/50 p-3 text-sm">
+                    <p className="mb-2 text-foreground">
                       "The transparency and impact reports make me confident my donations are making a difference."
                     </p>
-                    <p className="text-xs text-zinc-400">— James R., Monthly Donor</p>
+                    <p className="text-xs text-muted-foreground">— James R., Monthly Donor</p>
                   </div>
-                  <div className="rounded-lg bg-zinc-700 p-3 text-sm">
-                    <p className="mb-2 text-zinc-300">
+                  <div className="rounded-lg bg-data-muted/50 dark:bg-data-muted/50 p-3 text-sm">
+                    <p className="mb-2 text-foreground">
                       "I appreciate the detailed updates on how my contributions are being used."
                     </p>
-                    <p className="text-xs text-zinc-400">— Sarah M., Corporate Partner</p>
+                    <p className="text-xs text-muted-foreground">— Sarah M., Corporate Partner</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="grid gap-6 md:grid-cols-5">
-              <div className="flex items-center justify-center rounded-lg bg-zinc-800 p-4">
+              <div className="flex items-center justify-center rounded-lg bg-white dark:bg-data-muted/30 p-4 shadow-sm">
                 <Image
                   src="https://placehold.co/160x80/333/white?text=Partner+1"
                   alt="Partner logo"
@@ -780,7 +763,7 @@ export default function VersionB() {
                   className="h-12 w-auto"
                 />
               </div>
-              <div className="flex items-center justify-center rounded-lg bg-zinc-800 p-4">
+              <div className="flex items-center justify-center rounded-lg bg-white dark:bg-data-muted/30 p-4 shadow-sm">
                 <Image
                   src="https://placehold.co/160x80/333/white?text=Partner+2"
                   alt="Partner logo"
@@ -789,7 +772,7 @@ export default function VersionB() {
                   className="h-12 w-auto"
                 />
               </div>
-              <div className="flex items-center justify-center rounded-lg bg-zinc-800 p-4">
+              <div className="flex items-center justify-center rounded-lg bg-white dark:bg-data-muted/30 p-4 shadow-sm">
                 <Image
                   src="https://placehold.co/160x80/333/white?text=Partner+3"
                   alt="Partner logo"
@@ -798,7 +781,7 @@ export default function VersionB() {
                   className="h-12 w-auto"
                 />
               </div>
-              <div className="flex items-center justify-center rounded-lg bg-zinc-800 p-4">
+              <div className="flex items-center justify-center rounded-lg bg-white dark:bg-data-muted/30 p-4 shadow-sm">
                 <Image
                   src="https://placehold.co/160x80/333/white?text=Partner+4"
                   alt="Partner logo"
@@ -807,7 +790,7 @@ export default function VersionB() {
                   className="h-12 w-auto"
                 />
               </div>
-              <div className="flex items-center justify-center rounded-lg bg-zinc-800 p-4">
+              <div className="flex items-center justify-center rounded-lg bg-white dark:bg-data-muted/30 p-4 shadow-sm">
                 <Image
                   src="https://placehold.co/160x80/333/white?text=Partner+5"
                   alt="Partner logo"
@@ -829,6 +812,7 @@ export default function VersionB() {
             alt="CTA background"
             fill
             className="object-cover"
+            priority
           />
           <div className="absolute inset-0 bg-black/70"></div>
         </div>
@@ -838,62 +822,60 @@ export default function VersionB() {
           animate={ctaControls}
           initial={{ opacity: 0, y: 30 }}
         >
-          <h2 className="mb-6 text-3xl font-bold md:text-5xl">Your donation funds real, measurable change.</h2>
+          <h2 className="mb-6 text-3xl font-bold md:text-5xl text-white">
+            Your donation funds real, measurable change.
+          </h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg text-zinc-300 md:text-xl">
             Every dollar you contribute helps us expand our reach and impact, bringing quality education to more
             children in underserved communities.
           </p>
 
           <div className="mx-auto flex max-w-md flex-col gap-4 sm:flex-row">
-            <Button size="lg" className="flex-1 bg-purple-600 hover:bg-purple-700">
+            <Button size="lg" className="flex-1 bg-data-primary hover:bg-data-primary/90 text-white">
               Donate Now
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="flex-1 border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white"
-            >
+            <Button size="lg" variant="outline" className="flex-1 border-white text-white hover:bg-white/10">
               Sponsor a Child
             </Button>
           </div>
 
           <div className="mt-12 grid gap-8 md:grid-cols-3">
-            <div className="rounded-lg bg-zinc-800/50 p-6">
-              <h3 className="mb-2 text-xl font-semibold">$25 Monthly</h3>
-              <p className="text-zinc-400">Provides school supplies for 5 students</p>
+            <div className="rounded-lg bg-data-muted/30 p-6">
+              <h3 className="mb-2 text-xl font-semibold text-white">$25 Monthly</h3>
+              <p className="text-zinc-300">Provides school supplies for 5 students</p>
             </div>
-            <div className="rounded-lg bg-zinc-800/50 p-6">
-              <h3 className="mb-2 text-xl font-semibold">$50 Monthly</h3>
-              <p className="text-zinc-400">Funds a teacher's salary for one classroom</p>
+            <div className="rounded-lg bg-data-muted/30 p-6">
+              <h3 className="mb-2 text-xl font-semibold text-white">$50 Monthly</h3>
+              <p className="text-zinc-300">Funds a teacher's salary for one classroom</p>
             </div>
-            <div className="rounded-lg bg-zinc-800/50 p-6">
-              <h3 className="mb-2 text-xl font-semibold">$100 Monthly</h3>
-              <p className="text-zinc-400">Sponsors a child's complete education</p>
+            <div className="rounded-lg bg-data-muted/30 p-6">
+              <h3 className="mb-2 text-xl font-semibold text-white">$100 Monthly</h3>
+              <p className="text-zinc-300">Sponsors a child's complete education</p>
             </div>
           </div>
         </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-black py-12">
+      <footer className="bg-data-background dark:bg-black py-12">
         <div className="container px-4">
-          <div className="mb-8 flex flex-col items-center justify-between gap-4 border-b border-zinc-800 pb-8 md:flex-row">
+          <div className="mb-8 flex flex-col items-center justify-between gap-4 border-b border-data-muted/30 pb-8 md:flex-row">
             <div className="text-center md:text-left">
               <h3 className="text-xl font-bold">EduBridge</h3>
-              <p className="text-sm text-zinc-500">Education for All</p>
+              <p className="text-sm text-muted-foreground">Education for All</p>
             </div>
 
             <div className="flex gap-6">
-              <a href="#" className="text-zinc-400 hover:text-white">
+              <a href="#" className="text-muted-foreground hover:text-foreground">
                 Facebook
               </a>
-              <a href="#" className="text-zinc-400 hover:text-white">
+              <a href="#" className="text-muted-foreground hover:text-foreground">
                 Twitter
               </a>
-              <a href="#" className="text-zinc-400 hover:text-white">
+              <a href="#" className="text-muted-foreground hover:text-foreground">
                 Instagram
               </a>
-              <a href="#" className="text-zinc-400 hover:text-white">
+              <a href="#" className="text-muted-foreground hover:text-foreground">
                 LinkedIn
               </a>
             </div>
@@ -902,24 +884,24 @@ export default function VersionB() {
           <div className="grid gap-8 md:grid-cols-4">
             <div>
               <h4 className="mb-4 font-semibold">About Us</h4>
-              <ul className="space-y-2 text-sm text-zinc-500">
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Our Mission
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Our Team
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Annual Reports
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Careers
                   </a>
                 </li>
@@ -928,24 +910,24 @@ export default function VersionB() {
 
             <div>
               <h4 className="mb-4 font-semibold">Our Work</h4>
-              <ul className="space-y-2 text-sm text-zinc-500">
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Programs
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Impact
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Where We Work
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Partners
                   </a>
                 </li>
@@ -954,24 +936,24 @@ export default function VersionB() {
 
             <div>
               <h4 className="mb-4 font-semibold">Get Involved</h4>
-              <ul className="space-y-2 text-sm text-zinc-500">
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Donate
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Sponsor a Child
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Volunteer
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <a href="#" className="hover:text-foreground">
                     Fundraise
                   </a>
                 </li>
@@ -980,7 +962,7 @@ export default function VersionB() {
 
             <div>
               <h4 className="mb-4 font-semibold">Contact</h4>
-              <ul className="space-y-2 text-sm text-zinc-500">
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>123 Education Lane</li>
                 <li>New York, NY 10001</li>
                 <li>info@edubridge.org</li>
@@ -989,14 +971,14 @@ export default function VersionB() {
             </div>
           </div>
 
-          <div className="mt-12 text-center text-xs text-zinc-600">
+          <div className="mt-12 text-center text-xs text-muted-foreground">
             <p>© {new Date().getFullYear()} EduBridge. All rights reserved.</p>
             <p className="mt-2">
-              <a href="#" className="hover:text-zinc-400">
+              <a href="#" className="hover:text-foreground">
                 Privacy Policy
               </a>{" "}
               |
-              <a href="#" className="hover:text-zinc-400">
+              <a href="#" className="hover:text-foreground">
                 {" "}
                 Terms of Service
               </a>
